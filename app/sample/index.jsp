@@ -14,19 +14,18 @@
 <%@page import="java.io.*"%>
 <%@page import="java.net.*" %>
 
-<%String recv;
-  String[] envprops = new String[4];
+<%
+  String[] props = new String[5];
   try{
-	String endpoint = System.getenv("ENV-FILE");
-	System.out.println(endpoint);
-	URL envpage = new URL(endpoint);
-  	System.out.println(envpage);
-  	URLConnection urlcon = envpage.openConnection();	
-  	BufferedReader buffread = new BufferedReader(new InputStreamReader(urlcon.getInputStream()));
+	String appConfig = System.getenv("CONFIG");
+	URL endpoint = new URL(appConfig);
+  	URLConnection connection = endpoint.openConnection();	
+  	BufferedReader buffread = new BufferedReader(new InputStreamReader(connection.getInputStream()));
   	
-	int i = 0; 
+	int i = 0;
+	String recv;
   	while((recv = buffread.readLine()) != null) {
-		envprops[i] = recv;
+		props[i] = recv;
 		i++;
 		
 	}
@@ -94,7 +93,7 @@
             <li>WLS Server Name: <%=System.getProperty("weblogic.Name")%></li>
             <li>getIpAddOfCurrSrv(): <%=getIpAddOfCurrSrv()%> </li>
         </ul>
-	<h1>envfile Information</h1>
-	<ul><li><% for(int i=0;i<4;i++) { %> <%=envprops[i]%> <%}%></li></ul>
+	<h1>Properties Information</h1>
+	<ul><% for(int i=0;i<5;i++) { %> <li><%=props[i]%></li> <%}%></ul>
     </body>
 </html>
