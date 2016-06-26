@@ -15,17 +15,22 @@
 <%@page import="java.net.*" %>
 
 <%String recv;
-  String recvbuff="";
+  String[] envprops = new String[4];
   try{
-	URL envpage = new URL("http://192.168.1.62:8000/dev.properties");
+	String endpoint = System.getenv("ENV-FILE");
+	System.out.println(endpoint);
+	URL envpage = new URL(endpoint);
   	System.out.println(envpage);
   	URLConnection urlcon = envpage.openConnection();	
   	BufferedReader buffread = new BufferedReader(new InputStreamReader(urlcon.getInputStream()));
-   
-  	while((recv = buffread.readLine()) != null)
-		recvbuff += recv;
+  	
+	int i = 0; 
+  	while((recv = buffread.readLine()) != null) {
+		envprops[i] = recv;
+		i++;
+		
+	}
   	buffread.close();
-  	System.out.println(recvbuff);
    }catch(Exception ex){System.out.println(ex);}	
 %>
 
@@ -90,6 +95,6 @@
             <li>getIpAddOfCurrSrv(): <%=getIpAddOfCurrSrv()%> </li>
         </ul>
 	<h1>envfile Information</h1>
-	<ul><li><%=recvbuff%></li></ul>
+	<ul><li><% for(int i=0;i<4;i++) { %> <%=envprops[i]%> <%}%></li></ul>
     </body>
 </html>
