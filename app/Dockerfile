@@ -17,7 +17,7 @@
 
 # Pull base image
 # ---------------
-FROM demoregistry.dataman-inc.com:5000/oracle/1221-domain
+FROM demoregistry.dataman-inc.com/oracle/1221-domain
 
 # Maintainer
 # ----------
@@ -25,7 +25,7 @@ MAINTAINER Bruno Borges <bruno.borges@oracle.com>
 
 # Define variables
 ENV APP_NAME="sample" \
-    APP_PKG_FILE="sample.war" \
+    APP_PKG_FILE="sample" \
     APP_PKG_LOCATION="/u01/oracle"
 
 # Copy files and deploy application in WLST Offline mode

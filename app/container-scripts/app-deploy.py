@@ -11,7 +11,7 @@ import os
 # Deployment Information 
 domainhome = os.environ.get('DOMAIN_HOME', '/u01/oracle/user_projects/domains/base_domain')
 appname    = os.environ.get('APP_NAME', 'sample')
-apppkg     = os.environ.get('APP_PKG_FILE', 'sample.war')
+apppkg     = os.environ.get('APP_PKG_FILE', 'sample')
 appdir     = os.environ.get('APP_PKG_LOCATION', '/u01/oracle')
 cluster_name = os.environ.get("CLUSTER_NAME", "DockerCluster")
 

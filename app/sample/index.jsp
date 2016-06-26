@@ -10,6 +10,25 @@
 <%@page import="java.net.InetAddress"%>
 <%@page import="weblogic.management.*"%>
 
+
+<%@page import="java.io.*"%>
+<%@page import="java.net.*" %>
+
+<%String recv;
+  String recvbuff="";
+  try{
+	URL envpage = new URL("http://192.168.1.62:8000/dev.properties");
+  	System.out.println(envpage);
+  	URLConnection urlcon = envpage.openConnection();	
+  	BufferedReader buffread = new BufferedReader(new InputStreamReader(urlcon.getInputStream()));
+   
+  	while((recv = buffread.readLine()) != null)
+		recvbuff += recv;
+  	buffread.close();
+  	System.out.println(recvbuff);
+   }catch(Exception ex){System.out.println(ex);}	
+%>
+
 <%!public static String getIpAddOfCurrSrv() {
         ServerRuntimeMBean serverRuntime = null;
         Set mbeanSet = null;
@@ -70,5 +89,7 @@
             <li>WLS Server Name: <%=System.getProperty("weblogic.Name")%></li>
             <li>getIpAddOfCurrSrv(): <%=getIpAddOfCurrSrv()%> </li>
         </ul>
+	<h1>envfile Information</h1>
+	<ul><li><%=recvbuff%></li></ul>
     </body>
 </html>
