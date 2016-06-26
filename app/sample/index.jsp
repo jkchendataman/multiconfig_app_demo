@@ -5,10 +5,8 @@
 --%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.Set"%>
-<%@page import="weblogic.management.runtime.ServerRuntimeMBean"%>
 <%@page import="java.net.UnknownHostException"%>
 <%@page import="java.net.InetAddress"%>
-<%@page import="weblogic.management.*"%>
 
 
 <%@page import="java.io.*"%>
@@ -33,32 +31,6 @@
    }catch(Exception ex){System.out.println(ex);}	
 %>
 
-<%!public static String getIpAddOfCurrSrv() {
-        ServerRuntimeMBean serverRuntime = null;
-        Set mbeanSet = null;
-        Iterator mbeanIterator = null;
-        String ipAddress = "";
-        String adminServerUrl = "t3://localhost:7001";
-        try {
-            MBeanHome mBeanHome = null;
-            mBeanHome = Helper.getAdminMBeanHome("weblogic", "welcome1", adminServerUrl);
-            mbeanSet = mBeanHome.getMBeansByType("ServerRuntime");
-            if (mbeanSet != null) {
-                mbeanIterator = mbeanSet.iterator();
-                while (mbeanIterator.hasNext()) {
-                    serverRuntime = (ServerRuntimeMBean) mbeanIterator.next();
-                    if (serverRuntime != null) {
-                        ipAddress = serverRuntime.getURL("HTTP");
-                        return ipAddress;
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-        return ipAddress;
-    }
-%>
-
 <%
     String hostname, serverAddress;
     hostname = "error";
@@ -81,7 +53,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>WebLogic on Docker - Request Information</h1>
+        <h1>app on Docker - Request Information</h1>
         <ul>
             <li>getVirtualServerName(): <%= request.getServletContext().getVirtualServerName() %></li>
             <li>InetAddress.hostname: <%=hostname%></li>
@@ -90,8 +62,6 @@
             <li>getLocalName(): <%=request.getLocalName()%></li>
             <li>getLocalPort(): <%=request.getLocalPort()%></li>
             <li>getServerName(): <%=request.getServerName()%></li>
-            <li>WLS Server Name: <%=System.getProperty("weblogic.Name")%></li>
-            <li>getIpAddOfCurrSrv(): <%=getIpAddOfCurrSrv()%> </li>
         </ul>
 	<h1>Properties Information</h1>
 	<ul><% for(int i=0;i<5;i++) { %> <li><%=props[i]%></li> <%}%></ul>
