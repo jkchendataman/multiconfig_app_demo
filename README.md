@@ -1,4 +1,9 @@
 # 配置管理demo
+1. 主要思路是：
+
+	1. 构建一个统一的配置管理容器，将不同环境的配置文件存放在此容器中，配置文件是通过Dockerfile的COPY或者通过共享文件挂载卷的方式加载到容器中。此容器内置nginx服务，可以下载或读取配置文件。（如：开发环境配置文件endpoint：http://IPADDR/dev.properties。测试环境配置文件endpoint：http://IPADDR/test.properties。生产环境配置文件endpoint：http://IPADDR/online.properties。）
+	2. 构建一个sample应用容器，容器启动时，通过"-e CONFIG=http://IPADDR/dev.properties" 指定环境所需的配置文件的endpoint。sample应用将通过此endpoint加载读取配置文件。
+	
 
 1. 构建配置管理容器。将所有配置文件拷贝或者挂载到此容器中的nginx发布目录，通过nginx服务下载或读取配置文件。
 
@@ -42,20 +47,8 @@
 		docker run -p 8080:8080 -e CONFIG=http://IPADDR/pre-online.properties -d sample:tomcat
 		
 3. TODO
-
-	参考Spring Cloud Config Server构建统一配置中心。配置管理服务器提供事件注册和通知，提供get/refresh配置项API,如：
-
-		curl http://localhost/env/bar
-		123456
-		curl -X POST http://localhost:8080/refresh
-		["bar"]
-		curl http://localhost:8080/env/bar
-		Boot
-	使用zookeeper实现配置同步
 	
-	使用etcd？
-
-
+	可以考虑构建配置管理服务提供get/refresh配置项等API，提供事件注册和通知，或加上zookeeper实现配置同步。
 		
 		
 		
