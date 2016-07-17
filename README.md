@@ -41,6 +41,21 @@
 		＃准生产环境发布应用
 		docker run -p 8080:8080 -e CONFIG=http://IPADDR/pre-online.properties -d sample:tomcat
 		
+3. TODO
+
+	参考Spring Cloud Config Server构建统一配置中心。配置管理服务器提供事件注册和通知机制，提供get/refresh配置项API,如：
+
+		curl http://localhost/env/bar
+		123456
+		curl -X POST http://localhost:8080/refresh
+		["bar"]
+		curl http://localhost:8080/env/bar
+		Boot
+	使用zookeeper提供配置同步机制
+	
+	使用etcd？
+
+
 		
 		
 		
