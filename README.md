@@ -6,7 +6,7 @@
 
 	docker build -t config . 
 
-	docker run -p 8000:80 -d config
+	docker run -p 8000:80 --net=host -d config
 
 2. 构建sample应用容器。sample应用是一个weblogic应用。应用的index.jsp通过容器env获得配置文件浏览链接，下载配置文件。
 
