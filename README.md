@@ -9,7 +9,7 @@
 		docker build -t config .
 		docker run --net=host -d config (why must host?FIXME)
 
-2. 构建sample应用容器。sample应用是一个weblogic应用。应用的index.jsp通过容器env获得配置文件浏览链接，下载配置文件。
+2. 构建sample应用容器。index.jsp通过容器env获得配置文件浏览链接并读取配置文件。
 
 		#-------------------------------------
 		# For Weblogic12.2.1
