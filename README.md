@@ -2,6 +2,7 @@
 1. 主要思路是：
 
 	1. 构建一个统一的配置管理容器，将不同环境的配置文件存放在此容器中，配置文件是通过Dockerfile的COPY或者通过共享文件挂载卷的方式加载到容器中。此容器内置nginx服务，可以下载或读取配置文件。（如：开发环境配置文件endpoint：http://IPADDR/dev.properties。测试环境配置文件endpoint：http://IPADDR/test.properties。生产环境配置文件endpoint：http://IPADDR/online.properties。）
+	
 	2. 构建一个sample应用容器，容器启动时，通过"-e CONFIG=http://IPADDR/dev.properties" 指定环境所需的配置文件的endpoint。sample应用将通过此endpoint加载读取配置文件。
 	
 
